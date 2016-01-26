@@ -10,11 +10,12 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var networkErrorButton: UIButton!
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var networkErrorButton: UIButton!
+
     var refreshControl: UIRefreshControl?
     var movies: [NSDictionary]?
     
@@ -27,11 +28,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         self.refreshControl = UIRefreshControl()
         // bind action to UIRefreshControl
         self.refreshControl!.addTarget(self, action: "refreshControlAction:",forControlEvents: UIControlEvents.ValueChanged)
-        self.tableView.insertSubview(self.refreshControl!, atIndex: 0)
+        self.collectionView.insertSubview(self.refreshControl!, atIndex: 0)
         
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
         loadDataFromNetwork()
     }
@@ -67,7 +68,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         data, options:[]) as? NSDictionary {
                             print("response: \(responseDictionary)")
                             self.movies = responseDictionary["results"] as? [NSDictionary]
-                            self.tableView.reloadData()
+                            self.collectionView.reloadData()
                     }
                 } else if let error = error{
                     print(self.isNetworkConnectionError(error))
@@ -88,14 +89,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             return false
         }
     }
-    
 
     @IBAction func onNetworkErrorButtonPress() {
         self.networkErrorButton.hidden = true
         loadDataFromNetwork()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let movies = movies {
             return movies.count
         } else {
@@ -103,12 +103,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         
         let movie = self.movies![indexPath.row]
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
+//        let title = movie["title"] as! String
+//        let overview = movie["overview"] as! String
+//        cell.titleLabel.text = title
+//        cell.overviewLabel.text = overview
         
         if let poster_path = movie["poster_path"] as? String {
             let baseURL = "http://image.tmdb.org/t/p/w500"
@@ -139,9 +141,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             // no poster image
             cell.posterView.image = nil
         }
-        
-        cell.titleLabel.text = title
-        cell.overviewLabel.text = overview
  
         print("row \(indexPath.row)")
         return cell
@@ -149,7 +148,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     // Makes a network request to get updated data
-    // Updates the tableView with the new data
+    // Updates the collectionView with the new data
     // Hides the RefreshControl
     func refreshControlAction(refreshControl: UIRefreshControl) {
         // ... Create the NSURLRequest (myRequest) ...
@@ -177,8 +176,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     }
                 }
             
-                // ReLoad the tableView now that there is new data
-                self.tableView.reloadData()
+                // ReLoad the collectionView now that there is new data
+                self.collectionView.reloadData()
                 
                 // Tell the refreshControl to stop spinning
                 refreshControl.endRefreshing()
