@@ -1,46 +1,44 @@
-# Project 1 - *Flicks*
+# Project 2 - *Flicks*
 
-**Flicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+**Flicks** is a movies app displaying box office and top rental DVDs using [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **8** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
-The following **required** functionality is complete:
+The following **required** functionality is completed:
 
-- [X] User can view a list of movies currently playing in theaters from The Movie Database.
-- [X] Poster images are loaded using the UIImageView category in the AFNetworking library.
-- [X] User sees a loading state while waiting for the movies API.
-- [X] User can pull to refresh the movie list.
+- [x] User can view movie details by tapping on a cell.
+- [x] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [x] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
 
-- [X] User sees an error message when there's a networking error.
-- [X] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
-- [X] All images fade in as they are loading.
-- [ ] Customize the UI.
+- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [ ] Customize the navigation bar.
 
 The following **additional** features are implemented:
 
 - [ ] List anything else that you can get done to improve the app functionality!
+- [x] Uses cached images
+- [x] Collection view
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. What are protocols and how do they work?
-2. Animation
+1. App Delegate, what it is and what it can be used for
+2. How to align cells in collection view so that there are no gaps in between
 
-## Video Walkthrough
+## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/H2VixmI.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/qFiImaL.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-At first I felt unsatisfied from copying huge chunks of code but as I implemented more and more things with less direct help, I figured out what each line was doing. I wish I had an overview or diagram of how each element was related to each other. I think a general discussion on what are protocols or an exercise creating one would help other people understand it better too.
+Getting everything aligned perfectly is hard, and many times items move around accidentally from clicking and dragging. I hope this will get better once we learn about AutoLayout
 
 ## License
 

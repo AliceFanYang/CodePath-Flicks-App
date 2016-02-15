@@ -15,6 +15,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var networkErrorButton: UIButton!
+    var endpoint: String?
 
     var refreshControl: UIRefreshControl?
     var movies: [NSDictionary]?
@@ -44,7 +45,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func loadDataFromNetwork() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(self.endpoint!)?api_key=\(apiKey)")
         
         let request = NSURLRequest(
             URL: url!,
@@ -188,14 +189,25 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let cell = sender as! UICollectionViewCell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.yellowColor()
+        cell.selectedBackgroundView = backgroundView
+        
+        let indexPath = collectionView.indexPathForCell(cell)
+        let movie = self.movies![indexPath!.row]
+        
+        let movieDetailsViewController = segue.destinationViewController as! MovieDetailsViewController
+        movieDetailsViewController.movie = movie
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+
 
 }
